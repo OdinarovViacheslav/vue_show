@@ -7,23 +7,21 @@ const onClickAdd = () => {
 const onClockFavorite = () => {
   alert('Favorite')
 }
+defineProps({
+  items: Array
+});
 </script>
 <template>
   <div class="grid grid-cols-4 gap-5">
-    <Card img-url="/sneakers/1.jpg"
-          title="hui"
-          :price="200"
-          :is-added="true"
-          :is-favorite="true"
-          :onClickAdd="onClickAdd"
-          :onClickFavorite="onClockFavorite"
+    <Card
+        v-for="item in items"
+        :key="item.id"
+        :img-url="item.imageUrl"
+        :title="item.title"
+        :price="item.price"
+        :onClickAdd="onClickAdd"
+        :onClickFavorite="onClockFavorite"
     />
-    <Card/>
-    <Card/>
-    <Card/>
-    <Card/>
-    <Card/>
-    <Card/>
   </div>
 </template>
 
