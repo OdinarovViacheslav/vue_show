@@ -1,15 +1,14 @@
 <script setup>
 import Card from "@/components/Card.vue";
+import {inject} from "vue";
 
-const onClickAdd = () => {
-  alert('Added to cart')
-}
-const onClockFavorite = () => {
-  alert('Favorite')
-}
 defineProps({
   items: Array
 });
+
+const addToFavorite = inject('addToFavorite')
+const emit = defineEmits(['addToCart'])
+
 </script>
 <template>
   <div class="grid grid-cols-4 gap-5">
@@ -19,8 +18,11 @@ defineProps({
         :img-url="item.imageUrl"
         :title="item.title"
         :price="item.price"
-        :onClickAdd="onClickAdd"
-        :onClickFavorite="onClockFavorite"
+        :onClickFavorite="() => addToFavorite(item)"
+        :onClickAdd = "() => emit('addToCart', (item))"
+        :is-favorite="item.isFavorite"
+        :id="item.id"
+        :is-added="item.isAdded"
     />
   </div>
 </template>
