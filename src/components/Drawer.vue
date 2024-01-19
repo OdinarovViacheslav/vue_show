@@ -1,6 +1,18 @@
 <script setup>
 import DrawerHead from "@/components/DrawerHead.vue";
 import CartListItem from "@/components/CartListItem.vue";
+import {computed} from "vue";
+
+const emit = defineEmits(['createOrder'])
+
+
+const props = defineProps({
+  totalPrice: Number,
+  discountPrice: Number,
+  isCreatingOrder: Boolean
+})
+
+const disabledButton = computed(() => props.isCreatingOrder ? true: !props.totalPrice)
 </script>
 
 <template>
@@ -14,15 +26,17 @@ import CartListItem from "@/components/CartListItem.vue";
       <div class="flex gap-2">
         <span>Итого:</span>
         <div class="flex-1 border-b border-dashed"></div>
-        <b>1234 $</b>
+        <b>{{ totalPrice }}</b>
       </div>
       <div class="flex gap-2">
         <span>Скидка:</span>
         <div class="flex-1 border-b border-dashed"></div>
-        <b>1 $</b>
+        <b>{{ discountPrice }}</b>
       </div>
-      <button disabled=""
-              class="bg-lime-500 w-full mt-4 rounded-xl py-3 hover:bg-lime-600 disabled:bg-slate-300
+      <button
+          :disabled="totalPrice ? false : true"
+          @click="() => emit('createOrder')"
+          class="bg-lime-500 w-full mt-4 rounded-xl py-3 hover:bg-lime-600 disabled:bg-slate-300
          hover:bg-lime-700 text-white cursor-pointer"
       >
         Оформить заказ
